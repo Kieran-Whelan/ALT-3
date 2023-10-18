@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create</title>
+  </head>
+  <body>
+    <h2>Create</h2>
+    <div>
+      <h3 class="h3 1">Data Analysis Process</h3>
+      <p>
+        Firstly our program allows the user to choose the graph range and type
+        of graph that they wish to view in the terminal. We take the input using
+        the standard Python input() function. We have 3 range options: full 1997
+        - 2017, first half 1997 - 2006 and second half 2007 - 2017. These
+        options can be applied to the median or separate categories graph.
+      </p>
+    </div>
+    <div>
+      <h3 class="h3 1">Code Snippets - Hover mouse to enlarge</h3>
+      <div>
+        <h4>CSV data parse function</h4>
+        <p>
+          This function has three parameters. (data) is the raw csv passed in.
+          (heading) is the csv heading of the column containing the data values.
+          (graph_range) is the range of rows to be displayed on the graph. The
+          if statement selects the data range to be used based on the user
+          input. The rest of the function parses the data for use.
+        </p>
+        <img class="code" src="/ALT-2-main/docs/images/code/Clean.png" />
+      </div>
+      <div>
+        <h4>Custom median function</h4>
+        <p>
+          We had to create our own median function as we needed the find the sum
+          of the median of three values to be plotted on the median graph. This
+          was something that we could not achieve using pandas alone. This short
+          function finds the sum of medians across our three datasets row by
+          row.
+        </p>
+        <img class="code" src="/ALT-2-main/docs/images/code/Median.png" />
+      </div>
+      <div>
+        <h4>Main function</h4>
+        <p>
+          This is a standard main function that is called when the script is
+          run. This code takes in user input and displays the selected graph.
+        </p>
+        <img class="code" src="/ALT-2-main/docs/images/code/Main.png" />
+      </div>
+    </div>
+    <div>
+      <h3 class="h3 1">Graphs - Hover mouse to enlarge</h3>
+      <p>
+        We started by plotting each of our datasets on separate graphs, however
+        this made the code long and repetitive. Contrary to our plan, we decided
+        to graph all our chosen categories against each other making it easier
+        to compare them and cut down on the code length.
+      </p>
+      <div>
+        <h4>Full Graph - all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph1.1.png" />
+      </div>
+      <div>
+        <h4>1997-2006 - all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph1.2.png" />
+      </div>
+      <div>
+        <h4>2007-2017 - all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph1.3.png" />
+      </div>
+      <div>
+        <h4>Full Graph - median of all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph2.1.png" />
+      </div>
+      <div>
+        <h4>1997-2006 - median of all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph2.2.png" />
+      </div>
+      <div>
+        <h4>2007-2017 - median of all categories</h4>
+        <img class="graph" src="/ALT-2-main/docs/images/graphs/Graph2.3.png" />
+      </div>
+    </div>
+  </body>
+</html>

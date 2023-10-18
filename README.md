@@ -1,0 +1,1 @@
+# ALT2 - Does time of year affect Consumer spending?
