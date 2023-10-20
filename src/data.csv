@@ -1,0 +1,4 @@
+Age,Model,Region,Package,Garage,PenaltyPoints,Mileage,DrivingExperience
+18,SEDAN,LEINSTER,TP,N,0,300,1
+24,SUV,CONNACHT,TPFT,Y,2,1000,4
+54,SPORTS,ULSTER,CI,Y,0,1500,36
