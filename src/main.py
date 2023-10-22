@@ -1,59 +1,83 @@
 import csv
 import math
 
-Cars = {
-    "COMPACT": 0.02,
-    "SUV": 0.06,
-    "SEDAN": 0.04,
-    "SPORTS": 0.08
+#Rates and Constants
+cars_types = {
+    1: 0.02, #Hatchback
+    2: 0.06, #SUV
+    3: 0.04, #Sedan
+    4: 0.08 #Sports
 }
 
-Regions = {
-    "LEINSTER": 0.08,
-    "MUNSTER": 0.06,
-    "ULSTER": 0.04,
-    "CONNACHT": 0.02
+regions = {
+    1: 0.08, #Leinster
+    2: 0.06, #Munster
+    3: 0.04, #Ulster
+    4: 0.02  #Connacht
 }
 
-BaseRates = {
-    "TP": 200,
-    "TPFT": 300,
-    "CI": 600
+base_rates = {
+    1: 200, #Third Party
+    2: 300, #Third Party Fire and Theft
+    3: 600  #Fully Comprehensive
 }
 
-def calculateInsurance(Age, Model, Region, Package, Garage, PenaltyPoints, Mileage, DrivingExperience):
-    Rates = []
-    Rates.append(BaseRates[Package] * Cars[Model])
-    Rates.append(BaseRates[Package] * Regions[Region])
-    
-    
-    #Age
-    if Age > 25 and Age < 65:
-        Rates.append(BaseRates[Package] * 0.04)
-    elif Age > 65:
-        Rates.append(BaseRates[Package] * 0.02)
-    else:
-        Rates.append(BaseRates[Package] * 0.08)
-    
-    #Garage
-    if Garage == "N":
-        Rates.append(BaseRates[Package] * 0.03)
-    
-    #PenaltyPoints
-    Rates.append(BaseRates[Package] * (0.03 * PenaltyPoints))
-    
-    #Mileage
-    Rates.append(BaseRates[Package] * (0.1 * (math.ceil(Mileage / 1000))))
-    
-    #Driving Experience
-    if DrivingExperience >= 3:
-        x = round(DrivingExperience / 3)
-        rate = 0.15 - (0.025 * x)
-        Rates.append(BaseRates[Package] * rate)
+is_garage = {
+    1: False,
+    2: True
+}
 
-    return(f"€{sum(Rates) + BaseRates[Package]}")
 
-def ConvertListToInt(arr):
+class Package:
+    def __init__(self, value, package, region, age, garage, vehicle_type, license_type, experience, penalty_points, milage):
+        self.value = value
+        self.package = package
+
+        if not base_rates.keys().__contains__(package):
+            print("Error: Invalid package chosen. Exiting program.....")
+            exit(0)
+
+        self.base_rate = base_rates[package]
+        self.region = region
+        self.age = age
+        self.garage = is_garage[garage]
+        self.vehicle_type = cars_types[vehicle_type]
+        self.license_type = license_type
+        self.experience = experience
+        self.penalty_points = penalty_points
+        self.milage = milage
+        self.rate_accumulator = []
+
+        self.rate_accumulator.append(self.value * 0.05)
+        self.rate_accumulator.append(self.base_rate * self.vehicle_type)
+
+        #Age
+        if self.age > 25 and self.age < 65:
+            self.rate_accumulator.append(self.base_rate * 0.04)
+        elif self.age > 65:
+            self.rate_accumulator.append(self.base_rate * 0.02)
+        else:
+            self.rate_accumulator.append(self.base_rate * 0.08)
+
+        #Garage
+        if not self.garage:
+            self.rate_accumulator.append(self.base_rate * 0.03)
+
+        #PenaltyPoints
+        self.rate_accumulator.append(self.base_rate * (0.03 * penalty_points))
+        
+        #Mileage
+        self.rate_accumulator.append(self.base_rate * (0.1 * (math.ceil(self.milage / 1000))))
+        
+        #Driving Experience
+        if self.experience >= 3:
+            rate = 0.15 - (0.025 * (round(self.experience / 3)))
+            self.rate_accumulator.append(self.base_rate * rate)   
+
+    def get_quote(self):
+        return sum(self.rate_accumulator)
+    
+def convert_list_to_int(arr):
     for i in arr:
         try:
             arr[arr.index(i)] = int(i)
@@ -61,29 +85,33 @@ def ConvertListToInt(arr):
             pass
     return(arr)
 
-def UnitTest():
-    with open("data.csv") as csv_file:
+def run_unit_tests():
+    with open("data/data.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
         rows = list(csv_reader)
         for i in range(1, len(rows)):
-            args = ConvertListToInt(rows[i])
-            print(f"\nRow {i}:")
-            print(calculateInsurance(*args))
-            
-select = int(input("Main (1) | Unit Testing (2): "))
-if select == 1:
-    Age = int(input("Age: "))
-    Model = input("Car Model (Compact, SUV, Sedan, Sports): ").upper()
-    Region = input("Region (Leinster, Munster, Ulster, Connacht): ").upper()
-    Package = input("Insurance Package (TP/TPFT/CI): ").upper()
-    Garage = input("Garage? (Y/N): ").upper()
-    PenaltyPoints = int(input("Penalty Points: "))
-    Mileage = int(input("Mileage (KM): "))
-    DrivingExperience = int(input("Driving Experience (Years): "))
+            args = convert_list_to_int(rows[i])
+            test_package = Package(*args)
+            print(test_package.get_quote())
 
-    print(calculateInsurance(Age, Model, Region, Package, Garage, PenaltyPoints, Mileage, DrivingExperience))
-elif select == 2:
-    UnitTest()
-else:
-    print("Select a valid option!")
-    exit(0)
+
+def main():
+    run_unit_tests()
+
+    #variables
+    vehicle_value = float(input("Enter vehicle value: \n"))
+    insurance_package = int(input("Enter insurance package: ((1) - Third Party (2) - Third Party Fire and Theft (3) - Fully comprehensive): \n"))
+    region = int(input("Enter insurance package: ((1) - Leinster (2) - Munster (3) - Connacht (4) - Ulster): \n"))
+    age = int(input("Enter your age: \n"))
+    garage = int(input("Will you store it in a garage: ((1) - No (2) - Yes) \n"))
+    vehicle_type = int(input("Enter your vehicle type: ((1) - Hatchback (2) - SUV (3) - Sedan (4) - Sports) \n"))
+    license_type = int(input("Enter your license type: ((1) - Provisional (2) - Full) \n"))
+    experience = int(input("Enter the number of years you have been on the road: \n"))
+    penalty_points = int(input("Enter the number of penalty points on your license: \n"))
+    milage = int(input("Enter your intended milage: \n"))
+
+    package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, milage)
+    print(package.get_quote())
+    
+if __name__ == "__main__":
+    main()
