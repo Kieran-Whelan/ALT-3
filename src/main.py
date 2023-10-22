@@ -29,7 +29,7 @@ is_garage = {
 
 
 class Package:
-    def __init__(self, value, package, region, age, garage, vehicle_type, license_type, experience, penalty_points, milage):
+    def __init__(self, value, package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, expected_value):
         self.value = value
         self.package = package
 
@@ -45,19 +45,19 @@ class Package:
         self.license_type = license_type
         self.experience = experience
         self.penalty_points = penalty_points
-        self.milage = milage
+        self.mileage = mileage
         self.rate_accumulator = []
 
         self.rate_accumulator.append(self.value * 0.05)
         self.rate_accumulator.append(self.base_rate * self.vehicle_type)
 
         #Age
-        if self.age > 25 and self.age < 65:
+        if self.age > 21 and self.age < 65:
             self.rate_accumulator.append(self.base_rate * 0.04)
         elif self.age > 65:
             self.rate_accumulator.append(self.base_rate * 0.02)
         else:
-            self.rate_accumulator.append(self.base_rate * 0.08)
+            self.rate_accumulator.append(self.base_rate * 2.5)
 
         #Garage
         if not self.garage:
@@ -67,7 +67,7 @@ class Package:
         self.rate_accumulator.append(self.base_rate * (0.03 * penalty_points))
         
         #Mileage
-        self.rate_accumulator.append(self.base_rate * (0.1 * (math.ceil(self.milage / 1000))))
+        self.rate_accumulator.append(self.base_rate * (0.1 * (math.ceil(self.mileage / 1000))))
         
         #Driving Experience
         if self.experience >= 3:
@@ -92,7 +92,11 @@ def run_unit_tests():
         for i in range(1, len(rows)):
             args = convert_list_to_int(rows[i])
             test_package = Package(*args)
-            print(test_package.get_quote())
+            print(f"Test Case {i}:")
+            if args[-1] == test_package.get_quote():
+                print("Pass\n")
+            else:
+                print("Fail\n")
 
 
 def main():
@@ -108,10 +112,10 @@ def main():
     license_type = int(input("Enter your license type: ((1) - Provisional (2) - Full) \n"))
     experience = int(input("Enter the number of years you have been on the road: \n"))
     penalty_points = int(input("Enter the number of penalty points on your license: \n"))
-    milage = int(input("Enter your intended milage: \n"))
+    mileage = int(input("Enter your intended milage: \n"))
 
-    package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, milage)
+    package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage)
     print(package.get_quote())
-    
+
 if __name__ == "__main__":
     main()
