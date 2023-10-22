@@ -46,6 +46,7 @@ class Package:
         self.experience = experience
         self.penalty_points = penalty_points
         self.mileage = mileage
+        self.expected_value = expected_value #only for test cases
         self.rate_accumulator = []
 
         self.rate_accumulator.append(self.value * 0.05)
@@ -77,6 +78,9 @@ class Package:
     def get_quote(self):
         return sum(self.rate_accumulator)
     
+    def get_expected_value(self):
+        return self.expected_value
+    
 def convert_list_to_int(arr):
     for i in arr:
         try:
@@ -93,10 +97,10 @@ def run_unit_tests():
             args = convert_list_to_int(rows[i])
             test_package = Package(*args)
             print(f"Test Case {i}:")
-            if args[-1] == test_package.get_quote():
-                print("Pass\n")
+            if test_package.get_expected_value() == test_package.get_quote():
+                print("Passed\n")
             else:
-                print("Fail\n")
+                print("Failed\n")
 
 
 def main():
@@ -114,7 +118,7 @@ def main():
     penalty_points = int(input("Enter the number of penalty points on your license: \n"))
     mileage = int(input("Enter your intended milage: \n"))
 
-    package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage)
+    package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, 0)
     print(package.get_quote())
 
 if __name__ == "__main__":
