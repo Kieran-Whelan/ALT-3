@@ -27,6 +27,10 @@ is_garage = {
     2: True
 }
 
+is_provisional = {
+    1: True,
+    2: False
+}
 
 class Package:
     def __init__(self, value, package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, expected_value):
@@ -42,7 +46,7 @@ class Package:
         self.age = age
         self.garage = is_garage[garage]
         self.vehicle_type = cars_types[vehicle_type]
-        self.license_type = license_type
+        self.license_type = is_provisional[license_type]
         self.experience = experience
         self.penalty_points = penalty_points
         self.mileage = mileage
@@ -67,13 +71,17 @@ class Package:
         #PenaltyPoints
         self.rate_accumulator.append(self.base_rate * (0.03 * penalty_points))
         
+        #License Type
+        if self.license_type:
+            self.rate_accumulator.append(self.base_rate * 1.5)
+        
         #Mileage
         self.rate_accumulator.append(self.base_rate * (0.1 * (math.ceil(self.mileage / 1000))))
         
         #Driving Experience
         if self.experience >= 3:
             rate = 0.15 - (0.025 * (round(self.experience / 3)))
-            self.rate_accumulator.append(self.base_rate * rate)   
+            self.rate_accumulator.append(self.base_rate * rate)  
 
     def get_quote(self):
         return sum(self.rate_accumulator)
@@ -90,7 +98,7 @@ def convert_list_to_int(arr):
     return(arr)
 
 def run_unit_tests():
-    with open("data/data.csv") as csv_file:
+    with open("../data/data.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
         rows = list(csv_reader)
         for i in range(1, len(rows)):
@@ -101,25 +109,24 @@ def run_unit_tests():
                 print("Passed\n")
             else:
                 print("Failed\n")
-
-
 def main():
     run_unit_tests()
 
     #variables
-    vehicle_value = float(input("Enter vehicle value: \n"))
+    vehicle_value = float(input("Enter vehicle value:\n"))
     insurance_package = int(input("Enter insurance package: ((1) - Third Party (2) - Third Party Fire and Theft (3) - Fully comprehensive): \n"))
-    region = int(input("Enter insurance package: ((1) - Leinster (2) - Munster (3) - Connacht (4) - Ulster): \n"))
+    region = int(input("Location: ((1) - Leinster (2) - Munster (3) - Connacht (4) - Ulster): \n"))
     age = int(input("Enter your age: \n"))
     garage = int(input("Will you store it in a garage: ((1) - No (2) - Yes) \n"))
     vehicle_type = int(input("Enter your vehicle type: ((1) - Hatchback (2) - SUV (3) - Sedan (4) - Sports) \n"))
     license_type = int(input("Enter your license type: ((1) - Provisional (2) - Full) \n"))
     experience = int(input("Enter the number of years you have been on the road: \n"))
     penalty_points = int(input("Enter the number of penalty points on your license: \n"))
-    mileage = int(input("Enter your intended milage: \n"))
+    mileage = int(input("Enter your intended milage (yearly): \n"))
 
     package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, 0)
-    print(package.get_quote())
-
+    print("----------------")
+    print(f"Your premium is: \n€{package.get_quote()}!")
+    
 if __name__ == "__main__":
     main()
