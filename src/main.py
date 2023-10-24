@@ -32,11 +32,14 @@ is_provisional = {
     2: False
 }
 
+#reuseable package object
 class Package:
     def __init__(self, value, package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, expected_value):
+        #setting all class variables
         self.value = value
         self.package = package
 
+        #checking is base rate entered is valid
         if not base_rates.keys().__contains__(package):
             print("Error: Invalid package chosen. Exiting program.....")
             exit(0)
@@ -53,7 +56,9 @@ class Package:
         self.expected_value = expected_value #only for test cases
         self.rate_accumulator = []
 
+        #Value increase
         self.rate_accumulator.append(self.value * 0.05)
+        #Vehicle class increase
         self.rate_accumulator.append(self.base_rate * self.vehicle_type)
 
         #Age
@@ -83,6 +88,7 @@ class Package:
             rate = 0.15 - (0.025 * (round(self.experience / 3)))
             self.rate_accumulator.append(self.base_rate * rate)  
 
+    #function that returns total quote
     def get_quote(self):
         return sum(self.rate_accumulator)
     
@@ -97,6 +103,7 @@ def convert_list_to_int(arr):
             pass
     return(arr)
 
+#runs three unit tests from a csv file
 def run_unit_tests():
     with open("../data/data.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
@@ -109,10 +116,12 @@ def run_unit_tests():
                 print("Passed\n")
             else:
                 print("Failed\n")
+
+#main function/program body
 def main():
     run_unit_tests()
 
-    #variables
+    #user inputs
     vehicle_value = float(input("Enter vehicle value:\n"))
     insurance_package = int(input("Enter insurance package: ((1) - Third Party (2) - Third Party Fire and Theft (3) - Fully comprehensive): \n"))
     region = int(input("Location: ((1) - Leinster (2) - Munster (3) - Connacht (4) - Ulster): \n"))
@@ -124,9 +133,11 @@ def main():
     penalty_points = int(input("Enter the number of penalty points on your license: \n"))
     mileage = int(input("Enter your intended milage (yearly): \n"))
 
+    #creating custom package taking in user inputs
     package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, 0)
     print("----------------")
     print(f"Your premium is: \n€{package.get_quote()}!")
     
+#main function starter - calls main function
 if __name__ == "__main__":
     main()

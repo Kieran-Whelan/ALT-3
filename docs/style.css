@@ -47,6 +47,7 @@ img {
 
 .h3 {
   font-style: italic;
+  text-decoration: underline;
 }
 
 .graph {

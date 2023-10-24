@@ -2,7 +2,7 @@
 const regex = /<body[^>]*>((.|[\n\r])*)<\/body>/im;
 //set of all pages
 const pages = {
-  0: "intro.html",
+  0: "investigate.html",
   1: "plan.html",
   2: "design.html",
   3: "create.html",
