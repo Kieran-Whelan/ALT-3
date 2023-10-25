@@ -70,7 +70,7 @@ class Package:
             self.rate_accumulator.append(self.base_rate * 2.5)
 
         #Garage
-        if not self.garage:
+        if not self.garage and self.package != 1: #not including garage variable for third party
             self.rate_accumulator.append(self.base_rate * 0.03)
 
         #PenaltyPoints
@@ -105,7 +105,7 @@ def convert_list_to_int(arr):
 
 #runs three unit tests from a csv file
 def run_unit_tests():
-    with open("../data/data.csv") as csv_file:
+    with open("data/data.csv") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
         rows = list(csv_reader)
         for i in range(1, len(rows)):
@@ -121,17 +121,29 @@ def run_unit_tests():
 def main():
     run_unit_tests()
 
-    #user inputs
-    vehicle_value = float(input("Enter vehicle value:\n"))
+    #user input variables
     insurance_package = int(input("Enter insurance package: ((1) - Third Party (2) - Third Party Fire and Theft (3) - Fully comprehensive): \n"))
     region = int(input("Location: ((1) - Leinster (2) - Munster (3) - Connacht (4) - Ulster): \n"))
     age = int(input("Enter your age: \n"))
-    garage = int(input("Will you store it in a garage: ((1) - No (2) - Yes) \n"))
     vehicle_type = int(input("Enter your vehicle type: ((1) - Hatchback (2) - SUV (3) - Sedan (4) - Sports) \n"))
     license_type = int(input("Enter your license type: ((1) - Provisional (2) - Full) \n"))
     experience = int(input("Enter the number of years you have been on the road: \n"))
     penalty_points = int(input("Enter the number of penalty points on your license: \n"))
-    mileage = int(input("Enter your intended milage (yearly): \n"))
+
+    #depending variables - sets to zero otherwise so they have no effect on premium
+    #depends on user having selected third_party fire and theft or fully comp
+    if insurance_package == 2 or insurance_package == 3:
+        vehicle_value = float(input("Enter vehicle value:\n"))
+        garage = int(input("Will you store it in a garage: ((1) - No (2) - Yes) \n"))
+    else:
+        vehicle_value = 0
+        garage = 0
+
+    #depends on user selecting fully comp
+    if insurance_package == 3:
+        mileage = int(input("Enter your intended milage (yearly): \n"))
+    else:
+        mileage = 0
 
     #creating custom package taking in user inputs
     package = Package(vehicle_value, insurance_package, region, age, garage, vehicle_type, license_type, experience, penalty_points, mileage, 0)
