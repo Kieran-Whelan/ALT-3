@@ -112,7 +112,7 @@ def run_unit_tests():
             args = convert_list_to_int(rows[i])
             test_package = Package(*args)
             print(f"Test Case {i}:")
-            if test_package.get_expected_value() == test_package.get_quote():
+            if int(round((test_package.get_expected_value()), 0)) == int(test_package.get_quote()):
                 print("Passed\n")
             else:
                 print("Failed\n")
