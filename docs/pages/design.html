@@ -11,44 +11,57 @@
     <div>
       <h3 class="h3 1">Problem Breakdown</h3>
       <p>
-        In order to complete this model we followed the these sequential steps:
+        We used decomposition and abstraction to design this model. We initially
+        ignored the fine details and optimizations to create a prototype
+        version. We broke down the problem into the following requirements:
       </p>
       <ul>
         <li>
-          <p>Step 1 - We researched insurance websites and lay out a list of variables to take into account</p>
+          <p>Step 1 - We need variables to base the quote off</p>
         </li>
         <li>
-          <p>Step 2 - We then assigned appropriate percentage weightings</p>
+          <p>Step 2 - We need to take in these variables as input from the user</p>
         </li>
         <li>
-          <p>Step 3 - We then created unit tests and expected values to ensure no programming errors</p>
+          <p>Step 3 - We need to pass these variables into a function that calculates and returns the quote</p>
+        </li>
+        <li>
+          <p>Step 4 - We then need to display the quote to the user</p>
         </li>
       </ul>
     </div>
     <div>
       <h3 class="h3 1">Code Design</h3>
       <p>
-        We used Python 3 to analyse the code the model. We chose snake_case as
-        our variable and function naming convention throughout this project and
-        Pascal case for out class naming convention. We decided to employ a
-        combination of functional and object orientated programming, we decided
-        to use an object oriented approach as it was practical for implementing
-        unit tests. We used the Python built-in "math" and "csv" libraries, thus
+        We will use Python 3 to code the model. We chose snake_case as our variable
+        and function naming convention throughout this project and Pascal case
+        for out class naming convention. We will employ a combination of
+        functional and object orientated programming, we decided to use an
+        object oriented approach as it will br practical for implementing unit
+        tests. We will use the Python built-in "math" and "csv" libraries, thus
         cutting down on code length.
       </p>
     </div>
-    <div>
-      <h3 class="h3 1">Pseudo Code</h3>
-      <p>
-        Ask user for all required inputs
-        <br/>
-        Pass these inputs into the package class
-      </p>
-      <br />
-      <img
-        src="https://www.vectorlogo.zone/logos/python/python-ar21.png"
-        alt="python logo"
-      />
-    </div>
+    <h3 class="h3 1">Pseudo Code - Hover cursor to enlarge</h3>
+    <h4>Main Function</h4>
+    <img
+      src="/docs/images/code/MainFunctionPseudo.png"
+      alt="main function"
+      class="code"
+    />
+    <br />
+    <h4>Package Class</h4>
+    <img
+      src="/docs/images/code/PackageClassPseudo.png"
+      alt="package class"
+      class="code"
+    />
+    <br />
+    <h4>Variable Table</h4>
+    <img
+      src="/docs/images/code/VariableTable.png"
+      alt="package class"
+      class="code"
+    />
   </body>
 </html>
