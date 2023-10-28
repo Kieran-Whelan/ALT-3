@@ -45,6 +45,11 @@ img {
   border-radius: 1vw;
 }
 
+.link {
+  text-decoration: underline;
+  color: blue;
+}
+
 .h3 {
   font-style: italic;
   text-decoration: underline;

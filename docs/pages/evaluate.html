@@ -11,54 +11,80 @@
     <div>
       <h3 class="h3 1">Testing Results</h3>
       <p>
-        The original unit testing results confused us. We failed the first test
+        The initial unit testing results confused us. We failed the first test
         becuase the driver had no garage, but chose third party. We treated the
         calculation as normal even though not having a garage should not affect
         the third party premium.
       </p>
+      <img style="height: 20vh" src="/docs/images/code/InitialTest.PNG" />
+      <p>
+        We fixed this problem by ammending our Package class with an if
+        statement that check if the package is not "third party" before add the
+        garage increase.
+      </p>
+      <img class="code" src="/docs/images/code/GarageFix.png" />
+      <p>
+        We have since added two additional tests to increase the scope of the
+        unit testing. Our program is currently passing all 5 tests. However, the
+        unit tests will be useful if we further develope the program in the
+        future as they will fail if we make a logic error, thus helping us
+        eliminate all errors that python does not catch.
+      </p>
+      <img style="height: 30vh" src="/docs/images/code/FianlTest.png" />
+      <br />
+      <h4>Final Results Table</h4>
+      <img style="width: 45vw" src="/docs/images/code/ActualResults.png" />
     </div>
     <div>
       <h3 class="h3 1">What parts worked out as expected?</h3>
-      <ul>
-        <li>Fixing sub-headings in docs to scroll and highlight on click</li>
-        <li>
-          Anaylse more areas of consumer spending in our median graph making it
-          a better sanmple of total expenditure
-        </li>
-      </ul>
+      <p>
+        Thanks to our prudent planning most of this project worked out as
+        planned. The inputs and outputs all worked as intended, we had no issues
+        there. Implementing the Package class worked well, it also helped cut
+        down on unit test code. The unit tests worked as intended, by helping us
+        identify small logical errors that would have went uncaught otherwise.
+        The Python interpreter can only catch syntax errors and fatal logic
+        errors.
+      </p>
     </div>
     <div>
       <h3 class="h3 1">What parts did not work out as expected?</h3>
       <p>
-        At first we just multiplied by the repective rates for each variable in
-        a loop. This gave us extremely high premiums as it the value was
-        compounding with each iteration.
+        Like with all programming projects we faced problems. The first problem
+        we faced was extremely high quotes. Our program was outputting quotes of
+        €5000 for a car worth only €4000. This was caused by compounding, every
+        time we increased the quote we multiplied the same variable causing the
+        value to compound. We fixed this by implementing a rate_accumulator
+        array. Each quote increase is appended to this list and at the end the
+        get_quote function returns the sum of the quote_accumulator, using the
+        Python sum() function.
       </p>
     </div>
     <div>
-      <h3 class="h3 1">What our biggest challenges?</h3>
+      <h3 class="h3 1">What were our biggest challenges?</h3>
       <p>
         Our biggest challenge was using the csv to store our unit test values.
         We could not get this to work properly for two classes as we were trying
         to use our own functions. After further research we found that Python
-        has a built in csv module to help deal with these problems.
+        has a built in csv module to help deal with these problems, thus
+        allowing us to cut down on code length and complexity.
       </p>
-    </div>
-    <div>
-      <h3 class="h3 1">Changelog</h3>
-      <p>
-        Our biggest challenge was using the csv to store our unit test values.
-        We could not get this to work properly for two classes as we were trying
-        to use our own functions. After further research we found that Python
-        has a built in csv module to help deal with these problems.
-      </p>
-    </div>
-    <div>
+      <h4>Initial CSV code</h4>
+      <img src="/docs/images/code/InitialCSV.png" />
+      <h4>Final CSV code</h4>
+      <img src="/docs/images/code/UnitTest.png" />
       <br />
-      <img
-        src="data:image/png;base64,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"
-        alt="eval img"
-      />
+      <p>
+        Another challenge we faced was keeping the quotes realistic. We had to
+        adjust the percentages multiple times to make it as accurate as
+        possible, however it is still not perfect. For example if your car is
+        expensive and you chose third party fire and theft or fully
+        comprehensive your quote may be off because we always add 5% of the car
+        value to the accumulator. This doesnt affect cars worth less than
+        €25000, but it is noticable if your car is worth more than this. We
+        could find any inofrmation on how real world companies take value into
+        account this, this was the best solution that we found.
+      </p>
     </div>
   </body>
 </html>

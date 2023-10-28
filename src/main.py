@@ -137,7 +137,7 @@ def main():
         garage = int(input("Will you store it in a garage: ((1) - No (2) - Yes) \n"))
     else:
         vehicle_value = 0
-        garage = 0
+        garage = 1
 
     #depends on user selecting fully comp
     if insurance_package == 3:

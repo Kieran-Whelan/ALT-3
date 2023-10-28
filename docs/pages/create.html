@@ -10,31 +10,48 @@
     <h2>Create</h2>
     <div>
       <h3 class="h3 1">Programming Process</h3>
-      <p>
-        In order to code this model we followed the these sequential steps:
-      </p>
+      <p>In order to code this model we followed the these sequential steps:</p>
       <ul>
         <li>
-          <p>Step 1 - We researched insurance websites and lay out a list of variables to take into account</p>
+          <p>
+            Step 1 - We researched insurance websites and lay out a list of
+            variables to take into account
+          </p>
         </li>
         <li>
           <p>Step 2 - We then created a basic version in Python</p>
         </li>
         <li>
-          <p>Step 3 - We optimized the basic Python version by implementing Object Orientated Programming in pseudo code</p>
+          <p>
+            Step 3 - We optimized the basic Python version by implementing
+            Object Orientated Programming in pseudo code
+          </p>
         </li>
         <li>
-          <p>Step 4 - We implemented OOP into our python program and adjusted the percentages to give more realistic outputs</p>
+          <p>
+            Step 4 - We implemented OOP into our python program and adjusted the
+            percentages to give more realistic outputs
+          </p>
         </li>
         <li>
-          <p>Step 5 - We then created unit tests and expected values to ensure no programming errors</p>
+          <p>
+            Step 5 - We then created unit tests and expected values to ensure no
+            programming errors
+          </p>
         </li>
         <li>
-          <p>Step 6 - We then implemented these tests and created a csv containing all the test data</p>
+          <p>
+            Step 6 - We then implemented these tests and created a csv
+            containing all the test data
+          </p>
         </li>
         <li>
-          <p>Step 7 - Finally we ran manual tests and with the goal of crashing the program, we only crashed it once but fixed it with an error check in the Package class</p>
-          <img src="/docs/images/code/ErrorCheck.png"
+          <p>
+            Step 7 - Finally we ran manual tests and with the goal of crashing
+            the program, we only crashed it once but fixed it with an error
+            check in the Package class
+          </p>
+          <img src="/docs/images/code/ErrorCheck.png" />
         </li>
       </ul>
     </div>
@@ -43,10 +60,11 @@
       <p>
         When our program is ran it runs all unit test cases to ensure code is
         working. The results of these tests are printed in the terminal. Then
-        the program asks the user for the input variables. These variables are
-        used to create a package class which in turn calculates the quote. The
-        quote is then outputted to the user assuming the user inputs all
-        information correctly.
+        the program asks the user for the input variables. If the variables are
+        not needed to calculate the quote for a specific package those variables
+        are skipped. These variables are used to create a package class which in
+        turn calculates the quote. The quote is then outputted to the user
+        assuming the user inputs all information correctly.
       </p>
     </div>
     <div>
@@ -55,18 +73,20 @@
         <h4>Main Function</h4>
         <p>
           The main function is ran when the program starts. Firstly, it runs the
-          unit test cases.
+          unit test cases. Then it asks the user for all input variables
+          required to calculate the quote. It passes these variables into the
+          Package constructor, which calculates the quote. The quote is then
+          returned and outputted to the user.
         </p>
         <img class="code" src="/docs/images/code/Main.png" />
       </div>
       <div>
         <h4>Package Class</h4>
         <p>
-          We had to create our own median function as we needed the find the sum
-          of the median of three values to be plotted on the median graph. This
-          was something that we could not achieve using pandas alone. This short
-          function finds the sum of medians across our three datasets row by
-          row.
+          The Package class takes in all variables and calculates the quote
+          using the rate_accumulator array. This array is appended with the
+          increase for every variable. The final quote is gotten from the sum()
+          of this array.
         </p>
         <img class="code" src="/docs/images/code/ClassTop.png" />
         <img class="code" src="/docs/images/code/ClassBottom.png" />
@@ -74,27 +94,59 @@
       <div>
         <h4>Rate Dictionaries</h4>
         <p>
-          This is a standard main function that is called when the script is
-          run. This code takes in user input and displays the selected graph.
+          The rate dictionaries contain the multiple choice rates that are used
+          to calculate the quote. The key is the option the user selects which
+          is a integer input and the value is the float percentage value.
         </p>
         <img class="code" src="/docs/images/code/Dictionaries.png" />
       </div>
       <div>
         <h4>Unit Test Function</h4>
         <p>
-          This is a standard main function that is called when the script is
-          run. This code takes in user input and displays the selected graph.
+          The unit test function loads all unit test data from the data.csv file
+          using the python "csv" library. The function runs each row in the file
+          as a test, comparing the actual value from the Package class to the
+          expected value that we calculated on paper.
         </p>
         <img class="code" src="/docs/images/code/UnitTest.png" />
       </div>
       <div>
         <h4>Covert List To Int Function</h4>
         <p>
-          This is a standard main function that is called when the script is
-          run. This code takes in user input and displays the selected graph.
+          This function goes through every item in a list and tries to convert
+          them to a integer. If it receives the ValueError, this means it's not
+          an integer, subsequently it skips it and repeats till every item is
+          checked. It's needed to pass in the values into the program, since the
+          program won't work if u need an integer and it's a string instead.
         </p>
         <img class="code" src="/docs/images/code/CovertListToArr.png" />
       </div>
+    </div>
+    <div>
+      <h3 class="h3 1">Unit Test Table</h3>
+      <p>
+        We ran the following unit test on our program using the run_unit_tests
+        function seen above. We calculated the expected values on pen and paper
+        to ensure the program is working as intended.
+      </p>
+      <img style="width: 45vw" src="/docs/images/code/UnitTestTable.png" />
+      <h4>Table Legend</h4>
+      <ul>
+        <li>
+          <p>
+            Packages: 1 = third party, 2 = third party fire and theft, 3 = fully
+            comprehensive
+          </p>
+        </li>
+        <li>
+          <p>Regions: 1 = Leinster, 2 = Munster, 3 = Ulster, 4 = Connacht</p>
+        </li>
+        <li><p>Garage: 1 = no garage, 2 = garage</p></li>
+        <li>
+          <p>Vehicle Type: 1 = Hatchback, 2 = SUV, 3 = Sedan, 4 = Sports</p>
+        </li>
+        <li><p>All other values are direct integer inputs</p></li>
+      </ul>
     </div>
   </body>
 </html>
